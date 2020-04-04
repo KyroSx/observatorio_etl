@@ -1,13 +1,13 @@
+import database.database_env as db
 import mysql.connector
 from mysql.connector import errorcode
 
-from database_env import *
 
 config = {
-  'user': DB_USER,
-  'password': DB_PASSWORD,
+  'user': db.DB_USER,
+  'password': db.DB_PASSWORD,
   'host': '127.0.0.1',
-  'database': DB_NAME,
+  'database': db.DB_NAME,
   'raise_on_warnings': True
 }
 

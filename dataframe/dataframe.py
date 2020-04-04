@@ -1,14 +1,16 @@
 import pandas
+import numpy as np
 
 def get_dataframe():
     file = '~/TCC/bkBases/FUNDEB-por-Municipio_3.csv'
-    encode = "ISO-8859-1"
+    encode = "windows-1252"#"ISO-8859-1"
     separator = ';'
-    columns = [i for i in range(6)]
-    #columns = ['COD_MUN', 'Município', 'Mês', '2007', '2019']
+    columns = ['COD_MUN', 'Município', 'Mês', '2007', '2008']
     fundeb = pandas.read_csv(filepath_or_buffer=file,
                              encoding=encode,
-                             engine="python",
+                             engine="c",
                              sep=separator,
+                             decimal=',',
+                             nrows=10,
                              usecols=columns)
     return fundeb
