@@ -1,8 +1,10 @@
+import pandas
+import locale
+
 from database.connection import connect_to_db
 from dataframe.dataframe import get_dataframe
 from dataframe.standardize import standardize
-import pandas
-import locale
+
 
 fundeb = get_dataframe()
 
