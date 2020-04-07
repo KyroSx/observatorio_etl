@@ -1,5 +1,6 @@
-import database.database_env as db
 import mysql.connector
+import database.database_env as db
+
 from mysql.connector import errorcode
 
 
@@ -16,9 +17,9 @@ def connect_to_db():
         cnx = mysql.connector.connect(**config)
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Something is wrong with your user name or password")
+            print('Something is wrong with your user or password')
         elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("Database does not exist")
+            print('Database does not exist')
         else:
             print(err)
         cnx.close()
