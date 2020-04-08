@@ -15,6 +15,8 @@ def standardize(cell):
         'hyphen': re.compile(r'^\-$'),
     }
     
+    cell = cell.strip()
+    
     if regexs['correct'].match(cell):
         value = cell
     elif regexs['hyphen'].match(cell):
