@@ -14,8 +14,11 @@ def standardize(cell):
         'correct': re.compile(r'^\d*\.?\d*$'),
         'hyphen': re.compile(r'^\-$'),
     }
+
+    cell = str(cell)
     
-    cell = cell.strip()
+    if type(cell) is str:
+        cell = cell.strip()
     
     if regexs['correct'].match(cell):
         value = cell
