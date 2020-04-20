@@ -1,12 +1,16 @@
 import pandas
 import numpy as np
 
-def get_dataframe():
-    file_path = './data/FUNDEB_Municipio.csv'
-    encode = 'windows-1252'#'ISO-8859-1'
+def usecols():
     cols = [i for i in range(1,18)]
     del cols[2]
-    
+    return cols
+
+def get_dataframe():
+    file_path = './data/FUNDEB_Municipio.csv'
+    encode = 'windows-1252'
+    cols = usecols()
+
     fundeb = pandas.read_csv(
         filepath_or_buffer=file_path,
         encoding=encode,
@@ -14,7 +18,7 @@ def get_dataframe():
         decimal=',',
         engine='c',
         usecols=cols,
-        nrows=12
+        nrows=120
     )
-    
+
     return fundeb
