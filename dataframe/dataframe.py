@@ -1,19 +1,24 @@
 import pandas
 import numpy as np
 
+def usecols():
+    cols = [i for i in range(1,18)]
+    del cols[2]
+    return cols
+
 def get_dataframe():
     file_path = './data/FUNDEB_Municipio.csv'
-    columns = ['COD_MUN', 'Município', 'Mês', '2007', '2008']
-    encode = 'windows-1252'#'ISO-8859-1'
+    encode = 'windows-1252'
+    cols = usecols()
 
     fundeb = pandas.read_csv(
         filepath_or_buffer=file_path,
-        usecols=columns,
         encoding=encode,
         sep=';',
         decimal=',',
         engine='c',
-        nrows=10
+        usecols=cols,
+        nrows=120
     )
-    
+
     return fundeb
