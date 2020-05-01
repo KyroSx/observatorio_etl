@@ -7,16 +7,17 @@ from periods.period import get_period
 
 fundeb = get_dataframe()
 
-years = [f'{i}' for i in range(2007, 2020)]
-months = [i+1 for i in range(12)]
-space = '-' * 33
+years = [f"{i}" for i in range(2007, 2020)]
+space = "-" * 33
 
 for year in years:
     fundeb[year] = fundeb[year].apply(standardize)
 
-year = '2019'
-print(get_period(
-    "bimestral",
-    fundeb,
-    year
-))
+citys = fundeb.groupby("Município")
+for city_name, city_df in citys:
+    for year in years:
+        city_period_sum = get_period("anual", city_df, city_name, year)
+
+        print(f"{city_name}#{year}:")
+        print(f"sum is: {city_period_sum}")
+        print(space)

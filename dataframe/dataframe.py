@@ -20,7 +20,7 @@ def get_dataframe():
         decimal=",",
         engine="c",
         usecols=cols,
-        nrows=24,
+        # nrows=24,
     )
 
     return fundeb

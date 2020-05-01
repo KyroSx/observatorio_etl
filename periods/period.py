@@ -18,13 +18,11 @@ def get_period(period, city_data, city_name, year):
     city_data_year = city_data[year]
 
     size = int(len(city_data_year)/period_value)
-    print(f'size is {size}')
-    for c in range(size):
+    for i in range(size):
         city_period_sliced = city_data_year[start_interval:end_interval]
         city_period_sum = city_period_sliced.sum()
 
         start_interval = end_interval
         end_interval += period_value
 
-        print(f"{city_name}#{year}:")
-        print(f"sum is: {city_period_sum}")
+    return city_period_sum
