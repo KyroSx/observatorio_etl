@@ -9,13 +9,22 @@ def period_options(period) -> int:
 
     return periods.get(period, "Not a valid period")
 
-def get_period(period, fundeb, year):
+def get_period(period, city_data, city_name, year):
     period_value = period_options(period)
-    limit = period_value - 1
-    year_len = fundeb[year].size
-    scope = range(0, year_len, period_value -1)
 
-    for i in scope:
-        received = fundeb[year].loc[i:(i+limit)]
-        sums = received.sum()
-        print(f'{period}#{i} is ${sums}')
+    start_interval = 0
+    end_interval = period_value
+
+    city_data_year = city_data[year]
+
+    size = int(len(city_data_year)/period_value)
+    print(f'size is {size}')
+    for c in range(size):
+        city_period_sliced = city_data_year[start_interval:end_interval]
+        city_period_sum = city_period_sliced.sum()
+
+        start_interval = end_interval
+        end_interval += period_value
+
+        print(f"{city_name}#{year}:")
+        print(f"sum is: {city_period_sum}")
