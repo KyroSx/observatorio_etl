@@ -16,9 +16,9 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
 
 ## How to use 🧭
 
-Make sure you have [Python](https://www.python.org/) installed in your machine, then clone this repository with:
-- git: `git clone https://github.com/KyroSx/observatorio_etl.git`, or
-- with [hub](): `hub clone KyroSx/observatorio_etl`. 
+Make sure you have [Python](https://www.python.org/) installed in your machine, then clone this repository with one of these:
+- git: `git clone https://github.com/KyroSx/observatorio_etl.git`
+- [hub](): `hub clone KyroSx/observatorio_etl`. 
 
 You need to install the dependencies by running ` pip install -r requirements.txt`, this can be done inside a [virtual env](https://virtualenv.pypa.io/en/stable/).
 
