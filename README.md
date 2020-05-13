@@ -21,7 +21,7 @@ Make sure you have [Python](https://www.python.org/) installed in your machine, 
 You need to install the dependencies by running ` pip install -r requirements.txt`, this can be done inside a [virtual env](https://virtualenv.pypa.io/en/stable/).
 
 Inside the `database` folder, create a file called `database_env.py` which contains all your database information. It needs to look like this: 
-```
+```python
 DB_USER = "your-database-user"
 DB_PASSWORD = "your-database-password"
 DB_NAME = "your-database-name"
