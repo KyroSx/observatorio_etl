@@ -17,4 +17,4 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
 ## How to use 🧭
 
 ## Database structure
-
+![model v2 image](https://user-images.githubusercontent.com/33635656/81863161-238bd180-9541-11ea-914e-d3c9384ccd9b.png)
