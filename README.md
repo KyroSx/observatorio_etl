@@ -21,9 +21,14 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
   - Make sure you have at least [Python](https://www.python.org/) 3.7.4 installed in your machine
 
  - then clone this repository with one of these:
-    - Git: `git clone https://github.com/KyroSx/observatorio_etl.git`
-    - Hub: `hub clone KyroSx/observatorio_etl`. 
-
+    - Git: 
+     ```shell
+        git clone https://github.com/KyroSx/observatorio_etl.git
+      ```
+    - Hub:
+     ```shell
+        hub clone KyroSx/observatorio_etl
+      ```
   - Install the dependencies by running:
        ```shell
        $ pip install -r requirements.txt
