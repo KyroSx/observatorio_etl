@@ -23,11 +23,11 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
  - then clone this repository with one of these:
     - Git: 
          ```shell
-            git clone https://github.com/KyroSx/observatorio_etl.git
+         $ git clone https://github.com/KyroSx/observatorio_etl.git
          ```
     - Hub:
          ```shell
-            hub clone KyroSx/observatorio_etl
+         $ hub clone KyroSx/observatorio_etl
          ```
   - Install the dependencies by running:
        ```shell
