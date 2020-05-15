@@ -16,11 +16,11 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
 
 ## How to use 🧭
 
-- **Linux**
+**Linux**
 
   - Make sure you have at least [Python](https://www.python.org/) 3.7.4 installed in your machine
 
- - then clone this repository with one of these:
+  - then clone this repository with one of these:
     - Git: 
          ```shell
          $ git clone https://github.com/KyroSx/observatorio_etl.git
