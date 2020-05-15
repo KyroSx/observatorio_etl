@@ -25,10 +25,10 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
     - [hub](https://github.com/github/hub): `hub clone KyroSx/observatorio_etl`. 
 
   - Install the dependencies by running:
-   ```shell
-   $ pip install -r requirements.txt
-   ```
-   this can be done inside a [virtual env](https://virtualenv.pypa.io/en/stable/)
+       ```shell
+       $ pip install -r requirements.txt
+       ```
+       this can be done inside a [virtual env](https://virtualenv.pypa.io/en/stable/)
 
   - Create your own database config file, by running:
     - ```shell $ touch database/database_env.py```
