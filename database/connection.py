@@ -1,16 +1,17 @@
 import mysql.connector
-import database.database_env as db
+import database_env as db
 
 from mysql.connector import errorcode
 
 
 config = {
-  'user': db.DB_USER,
-  'password': db.DB_PASSWORD,
-  'host': '127.0.0.1',
-  'database': db.DB_NAME,
-  'raise_on_warnings': True
+    'user': db.DB_USER,
+    'password': db.DB_PASSWORD,
+    'host': db.HOST,
+    'database': db.DB_NAME,
+    'raise_on_warnings': True
 }
+
 
 def connect_to_db():
     try:
@@ -24,4 +25,4 @@ def connect_to_db():
             print(err)
         cnx.close()
     else:
-        return cnx            
+        return cnx
