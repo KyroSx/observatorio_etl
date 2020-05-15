@@ -21,8 +21,8 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
   - Make sure you have at least [Python](https://www.python.org/) 3.7.4 installed in your machine
 
  - then clone this repository with one of these:
-    - git: `git clone https://github.com/KyroSx/observatorio_etl.git`
-    - [hub](https://github.com/github/hub): `hub clone KyroSx/observatorio_etl`. 
+    - Git: `git clone https://github.com/KyroSx/observatorio_etl.git`
+    - Hub: `hub clone KyroSx/observatorio_etl`. 
 
   - Install the dependencies by running:
        ```shell
@@ -35,12 +35,12 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
     - ```shell $ echo 'DB_USER = "your-database-user"\nDB_PASSWORD = "your-database-password"\nDB_NAME = "your-database-name"\nHOST = "127.0.0.1"' >> database/database_env.py```
   
     - It needs to look like this: 
-    ```python
-    DB_USER = "your-database-user"
-    DB_PASSWORD = "your-database-password"
-    DB_NAME = "your-database-name"
-    HOST = "127.0.0.1"
-    ```
+        ```python
+        DB_USER = "your-database-user"
+        DB_PASSWORD = "your-database-password"
+        DB_NAME = "your-database-name"
+        HOST = "127.0.0.1"
+        ```
 
 ## Database structure
 ![database-model](https://user-images.githubusercontent.com/33635656/81863161-238bd180-9541-11ea-914e-d3c9384ccd9b.png)
