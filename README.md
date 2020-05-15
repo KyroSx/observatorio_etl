@@ -31,8 +31,9 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
        this can be done inside a [virtual env](https://virtualenv.pypa.io/en/stable/)
 
   - Create your own database config file, by running:
-    - ```shell $ touch database/database_env.py```
-    - ```shell $ echo 'DB_USER = "your-database-user"\nDB_PASSWORD = "your-database-password"\nDB_NAME = "your-database-name"\nHOST = "127.0.0.1"' >> database/database_env.py```
+     ```shell
+     $ touch database/database_env.py
+     $ echo 'DB_USER = "your-database-user"\nDB_PASSWORD = "your-database-password"\nDB_NAME = "your-database-name"\nHOST = "127.0.0.1"' >> database/database_env.py```
   
     - It needs to look like this: 
         ```python
