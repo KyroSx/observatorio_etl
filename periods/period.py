@@ -23,7 +23,8 @@ def get_sums_list(period_value, city_data_year) -> list:
         city_period_sliced = city_data_year[start_interval:end_interval]
         city_period_sum = city_period_sliced.sum()
 
-        city_period_sum_list.append(city_period_sum)
+        city_period_sum_rounded = round(city_period_sum, 2)
+        city_period_sum_list.append(city_period_sum_rounded)
 
         start_interval = end_interval
         end_interval += period_value
