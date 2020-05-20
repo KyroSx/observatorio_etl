@@ -3,12 +3,14 @@ from data.Data_Object import create_data_object
 
 def period_options(period) -> int:
     periods = {
-        "bimestral": 2,
-        "trimestral": 3,
-        "semestral": 6,
-        "anual": 12
+        "bimonthly": 2,
+        "quarterly": 3,
+        "half-yearly": 6,
+        "yearly": 12
     }
-    return periods.get(period, "Not a valid period")
+    period_value = periods.get(period, "Not a valid period")
+
+    return period_value
 
 
 def get_sums_list(period_value, city_data_year) -> list:
@@ -40,6 +42,7 @@ def get_period_object_list(period, city_data, city_name, year) -> list:
     city_period_sum_list = get_sums_list(period_value, city_data_year)
     city_period_object_list = []
 
+    ''' need to move this responsibility to another place '''
     for index, value in enumerate(city_period_sum_list):
         data_o = create_data_object(
             period, value,

@@ -13,19 +13,20 @@ class TestSumsInAcrelandiaPeriods(unittest.TestCase):
             760446.15, 696022.61, 667612.52,
             651903.12, 757361.32, 0]
 
-        srs = pandas.Series(datas, index=num)
+        series = pandas.Series(datas, index=num)
 
-        return srs
+        return series
 
     def get_response_from_sums_list(self, period_value):
+        ''' Before each '''
         data = self.get_acrelandia_series_2019()
 
         response = get_sums_list(period_value, data)
 
         return response
 
-    def test_annual_sum_in_acrelandia_2019(self):
-        ''' It should return correct sum on annual '''
+    def test_yearly_sum_in_acrelandia_2019(self):
+        ''' It should return correct sum on yearly '''
         response = self.get_response_from_sums_list(12)
         correct_value = [8227686.52]
 
@@ -37,8 +38,8 @@ class TestSumsInAcrelandiaPeriods(unittest.TestCase):
 
         self.assertEqual(size, ANNUAL_SIZE)
 
-    def test_semestral_sum_in_acrelandia_2019(self):
-        ''' It should return correct sum on trimestral '''
+    def test_half_yearly_sum_in_acrelandia_2019(self):
+        ''' It should return correct sum on half-yearly '''
         response = self.get_response_from_sums_list(6)
         correct_value = [4694340.80, 3533345.72]
 
@@ -50,7 +51,8 @@ class TestSumsInAcrelandiaPeriods(unittest.TestCase):
 
         self.assertEqual(size, SEMESTRAL_SIZE)
 
-    def test_trimestral_sum_in_acrelandia_2019(self):
+    def test_quarterly_sum_in_acrelandia_2019(self):
+        ''' it should return 4 correct quarterly values '''
         response = self.get_response_from_sums_list(3)
         correct_value = [2474059.81, 2220280.99,
                          2124081.28, 1409264.44]
@@ -63,8 +65,8 @@ class TestSumsInAcrelandiaPeriods(unittest.TestCase):
 
         self.assertEqual(size, TRIMESTRAL_SIZE)
 
-    def test_bimestral_sum_in_acrelandia_2019(self):
-        ''' it sould return 6 correct bimestral values '''
+    def test_bimonthly_sum_in_acrelandia_2019(self):
+        ''' it should return 6 correct bimonthly values '''
         response = self.get_response_from_sums_list(2)
 
         correct_value = [1762356.65, 1430109.10,
@@ -80,6 +82,7 @@ class TestSumsInAcrelandiaPeriods(unittest.TestCase):
         self.assertEqual(size, BIMESTRAL_SIZE)
 
     def test_get_period_object_list_in_acrelandia_2019(self):
+        ''' This need to be done after refact the actual code '''
         period = "anual"
         city_data = ''
         city_name = 'Acrelândia'

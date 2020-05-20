@@ -20,10 +20,11 @@ for year in years:
 
 citys = fundeb.groupby("Município")
 for city_name, city_df in citys:
+
     print(f'Loading for {city_name}...')
-    period_type = "anual".lower()
+    period_type = "yearly".lower()
+
     for year in years:
-        period_type = "anual".lower()
         list_data_objects += get_period_object_list(
             period_type, city_df, city_name, year)
 
