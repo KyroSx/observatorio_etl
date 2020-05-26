@@ -1,9 +1,8 @@
 
 class Data_Object:
     def __init__(self,
-                 period_type, value,
-                 location_year, location_city_name,
-                 index):
+                 period_type, value, index,
+                 location_year, location_city_name):
         self.period_type = period_type
         self.value = value
         self.location_year = location_year
