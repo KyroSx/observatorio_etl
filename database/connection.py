@@ -4,6 +4,10 @@ from . import database_env as db
 from mysql.connector import errorcode
 
 
+def create_database_object():
+    return Database()
+
+
 class Database:
     cnx = ''
     config = {
@@ -28,12 +32,18 @@ class Database:
     def close_connection(self):
         self.cnx.close()
 
-    def search_city_name_query(self, city_name):
-        if self.cnx is not None:
-            cursor = self.cnx.cursor()
-            query = f'SELECT idIBGE FROM locations '
-            query += f'WHERE name = \'{city_name}\''
+    def get_city_id_by_name(self, city_name):
+        self.start_connection()
 
-            cursor.execute(query)
-            city_id = [str(x) for x in cursor]
-            print(city_id[0])
+        cursor = self.cnx.cursor()
+        query = f'SELECT idIBGE FROM locations '
+        query += f'WHERE name = \'{city_name}\''
+        query += f'and type = \'Município\''
+
+        cursor.execute(query)
+        city_id = [x for x in cursor]
+
+        cursor.close()
+        self.close_connection()
+
+        return city_id
