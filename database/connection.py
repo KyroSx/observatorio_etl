@@ -2,6 +2,7 @@ import mysql.connector
 
 from . import database_env as db
 from mysql.connector import errorcode
+from helpers.str_helper import remove_parenthesis, remove_char_from_string
 
 
 def create_database_object():
@@ -32,18 +33,44 @@ class Database:
     def close_connection(self):
         self.cnx.close()
 
-    def get_city_id_by_name(self, city_name):
+    def format_query_result_as_str_list(self, cursor) -> list:
+        results = [str(result) for result in cursor]
+
+        results = map(lambda cid: remove_parenthesis(cid),
+                      results)
+
+        results = map(lambda cid: remove_char_from_string(cid, ','),
+                      results)
+
+        return list(results)
+
+    def get_str_fields_generic(self, data) -> list:
         self.start_connection()
-
         cursor = self.cnx.cursor()
-        query = f'SELECT idIBGE FROM locations '
-        query += f'WHERE name = \'{city_name}\''
-        query += f'and type = \'Município\''
 
+        fields, table, where = data.values()
+
+        formated_fields = ', '.join(fields)
+
+        query = f"SELECT {formated_fields} FROM {table}"
+        query += f" {where}"
         cursor.execute(query)
-        city_id = [x for x in cursor]
+
+        result = self.format_query_result_as_str_list(cursor)
 
         cursor.close()
         self.close_connection()
+
+        return result
+
+    def get_city_id_by_name(self, city_name):
+
+        data = {
+            "fields": ["idIBGE"],
+            "table": "locations",
+            "where": f'WHERE name=\'{city_name}\' and type=\'Municipio\''
+        }
+
+        city_id = self.get_str_fields_generic(data)
 
         return city_id
