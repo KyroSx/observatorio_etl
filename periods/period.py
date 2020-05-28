@@ -42,13 +42,18 @@ def get_period_object_list(period, city_data, city_name, year) -> list:
     city_period_sum_list = get_sums_list(period_value, city_data_year)
     city_period_object_list = []
 
+    data_dict = {}
+
     ''' need to move this responsibility to another place '''
     for index, value in enumerate(city_period_sum_list):
-        data_o = create_data_object(
-            period, value,
-            year, city_name,
-            index + 1
-        )
+        data_dict = {
+            "period": period,
+            "value": value,
+            "year": year,
+            "city_name": city_name,
+            "index": index+1
+        }
+        data_o = create_data_object(data_dict)
         city_period_object_list.append(data_o)
 
     return city_period_object_list
