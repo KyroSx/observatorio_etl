@@ -6,3 +6,5 @@ dataframe/__pycache__
 periods/__pycache__
 __pycache__/Data.cpython-38.pyc
 data/__pycache__
+src/.directory
+config/database_env.py

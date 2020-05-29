@@ -1,37 +1,16 @@
-import mysql.connector
-
-from . import database_env as db
-from mysql.connector import errorcode
-from helpers.str_helper import remove_parenthesis, remove_char_from_string
-
-
-def create_database_object():
-    return Database()
+from dataclasses import dataclass
+from src.load.database.connection import Database, create_database_object
+from src.transform.helpers.str_helper import (
+    remove_parenthesis, remove_char_from_string)
 
 
-class Database:
-    cnx = ''
-    config = {
-        'user': db.DB_USER,
-        'password': db.DB_PASSWORD,
-        'host': db.HOST,
-        'database': db.DB_NAME,
-        'raise_on_warnings': True
-    }
+def create_query_object(database: Database):
+    return Querys(database)
 
-    def start_connection(self):
-        try:
-            self.cnx = mysql.connector.connect(**self.config)
-        except mysql.connector.Error as err:
-            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print('Something is wrong with your user or password')
-            elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                print('Database does not exist')
-            else:
-                print(err)
 
-    def close_connection(self):
-        self.cnx.close()
+@dataclass
+class Querys:
+    database: Database
 
     def format_query_result_as_str_list(self, cursor) -> list:
         results = [str(result) for result in cursor]
@@ -45,19 +24,19 @@ class Database:
         return list(results)
 
     def get_query_results_formated(self, query: str):
-        self.start_connection()
-        cursor = self.cnx.cursor(buffered=True)
+        self.database.start_connection()
+        cursor = self.database.cnx.cursor(buffered=True)
 
         cursor.execute(query)
 
         result = self.format_query_result_as_str_list(cursor)
 
         cursor.close()
-        self.close_connection()
+        self.database.close_connection()
 
         return result
 
-    def get_str_fields_generic(self, data) -> list:
+    def get_str_fields_generic(self, data: dict) -> list:
 
         fields, table, where = data.values()
 
@@ -71,7 +50,8 @@ class Database:
         result = self.get_query_results_formated(query)
         return result
 
-    def get_reference_period_id_from_periods_dates(self, info):
+    # dont have values in database
+    def get_reference_period_id_from_periods_dates(self, info: dict):
         in_date, until_date = info.values()
 
         data = {
@@ -81,6 +61,7 @@ class Database:
         }
 
         ref_per = self.get_str_fields_generic(data)
+        return ref_per
 
     def get_city_id_by_name(self, city_name):
 

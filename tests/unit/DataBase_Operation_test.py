@@ -1,12 +1,28 @@
 import unittest
 from datetime import datetime
-from database.connection import create_database_object
-from helpers.str_helper import remove_parenthesis, remove_char_from_string
-from data.Data_Object import create_data_object, Data_Object
-from periods.reference_period import transform_string_to_date
+
+from src.load.database.connection import create_database_object
+from src.load.reference_period import transform_string_to_date
+
+from src.transform.helpers.str_helper import (
+    remove_parenthesis, remove_char_from_string)
+from src.transform.models.Data_Object import (
+    create_data_object, Data_Object)
+from src.load.database.querys.query import (
+    create_query_object)
 
 
 class TestDataBase(unittest.TestCase):
+
+    database = ''
+
+    def setUp(self):
+        ''' Before each '''
+        database = create_database_object()
+
+        query_object = create_query_object(database)
+
+        self.database = query_object
 
     def test_get_city_id_by_name(self):
         ''' Test if the data:name == locations:id '''
@@ -19,10 +35,10 @@ class TestDataBase(unittest.TestCase):
             'correct_list': city_id_list,
             'output_number': 0
         }
-        database = create_database_object()
-        self.test_generic_query_db(function=database.get_city_id_by_name,
+        self.test_generic_query_db(function=self.database.get_city_id_by_name,
                                    info=info)
 
+    @unittest.expectedFailure
     def test_get_reference_period_id_from_period(self):
         datetime_format = '%Y-%m-%d'
         def parse(string): return datetime.strptime(
@@ -40,11 +56,9 @@ class TestDataBase(unittest.TestCase):
             'output_number': 0
         }
 
-        database = create_database_object()
-
         self.test_generic_query_db(
             info=info,
-            function=database.get_reference_period_id_from_periods_dates)
+            function=self.database.get_reference_period_id_from_periods_dates)
 
     def test_generic_query_db(self, info={}, function=None):
         """ Template test for database querys 🎲 """

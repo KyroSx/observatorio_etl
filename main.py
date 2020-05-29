@@ -1,11 +1,11 @@
 import pandas
 
-from database.connection import Database
-from dataframe.standardize import standardize
-from periods.period import get_period_object_list
+from src.load.database.connection import Database
+from src.transform.standardize import standardize
+from src.transform.period import get_period_object_list
 
-from data.Data_Object import create_data_object
-from dataframe.dataframe import create_data_frame
+from src.transform.models.Data_Object import create_data_object
+from src.extract.dataframe import create_data_frame
 
 
 fundeb = create_data_frame(number_of_rows=12)
@@ -22,7 +22,7 @@ citys = fundeb.groupby("Município")
 for city_name, city_df in citys:
 
     print(f'Loading for {city_name}...')
-    period_type = "bimonthly".lower()
+    period_type = "yearly".lower()
 
     for year in years:
         list_data_objects += get_period_object_list(
