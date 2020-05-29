@@ -1,13 +1,6 @@
 import re
 import locale
-
-
-def t_parenthesis(cell):
-    return cell.replace("(", "").replace(")", "")
-
-
-def t_comma(cell):
-    return cell.replace(".", "").replace(",", ".")
+from helpers.str_helper import remove_parenthesis
 
 
 def standardize(cell):
@@ -28,7 +21,7 @@ def standardize(cell):
     elif regexs["hyphen"].match(cell):
         value = "0"
     else:
-        value = t_parenthesis(cell)
+        value = remove_parenthesis(cell)
         value = locale.atof(value)
 
     return float(value)
