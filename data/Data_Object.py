@@ -3,7 +3,6 @@ from dataclasses import dataclass
 
 @dataclass
 class Data:
-    id: int
     data: float
     idInformation: int
     idInformationDataType: int

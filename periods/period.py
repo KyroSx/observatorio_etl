@@ -21,7 +21,7 @@ def get_sums_list(period_value, city_data_year) -> list:
 
     size = int(len(city_data_year)/period_value)
 
-    for i in range(size):
+    for _ in range(size):
         city_period_sliced = city_data_year[start_interval:end_interval]
         city_period_sum = city_period_sliced.sum()
 

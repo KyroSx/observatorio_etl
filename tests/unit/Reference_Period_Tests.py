@@ -1,6 +1,6 @@
 import unittest
 from periods.reference_period import (get_reference_period,
-                  transform_string_to_date, is_leap_year)
+                                      transform_string_to_date, is_leap_year)
 import datetime
 
 
@@ -8,18 +8,29 @@ class Test(unittest.TestCase):
 
     def test_is_leap(self):
         """ Should identify if a year is leap 🎉 """
-        years = [
+        years_result = []
+        years = ['2007', 2009, 2010, 2011, 2013,
+                 2014, 2015, 2017, 2018, 2019]
+        leap_years = [
             1004, 1008, 1012, 1016, 1020, 1024, 1028,
             1032, 1036, 1040, 1044, 1048, 1052, 1056,
             1060, 1064, 1068, 1072, 1076, 1080, 2000,
             2004, 2008, 2012, 2016, 2020, 2024, ]
-        years_result = []
 
+        for year in leap_years:
+            years_result.append(is_leap_year(year))
+
+        for resultant, year in zip(years_result, leap_years):
+            print(f'{year}->{resultant}')
+            self.assertTrue(resultant)
+
+        years_result.clear()
         for year in years:
             years_result.append(is_leap_year(year))
 
-        for resultant in years_result:
-            self.assertTrue(resultant)
+        for resultant, year in zip(years_result, years):
+            print(f'{year}->{resultant}')
+            self.assertFalse(resultant)
 
     def test_reference_period_bimonthly(self):
         """ Should return correct ref_period to all bimonthly in a year 2️⃣ """

@@ -22,7 +22,7 @@ citys = fundeb.groupby("Município")
 for city_name, city_df in citys:
 
     print(f'Loading for {city_name}...')
-    period_type = "yearly".lower()
+    period_type = "bimonthly".lower()
 
     for year in years:
         list_data_objects += get_period_object_list(

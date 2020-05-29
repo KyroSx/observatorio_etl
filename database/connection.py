@@ -44,16 +44,10 @@ class Database:
 
         return list(results)
 
-    def get_str_fields_generic(self, data) -> list:
+    def get_query_results_formated(self, query: str):
         self.start_connection()
-        cursor = self.cnx.cursor()
+        cursor = self.cnx.cursor(buffered=True)
 
-        fields, table, where = data.values()
-
-        formated_fields = ', '.join(fields)
-
-        query = f"SELECT {formated_fields} FROM {table}"
-        query += f" {where}"
         cursor.execute(query)
 
         result = self.format_query_result_as_str_list(cursor)
@@ -63,12 +57,37 @@ class Database:
 
         return result
 
+    def get_str_fields_generic(self, data) -> list:
+
+        fields, table, where = data.values()
+
+        formated_fields = ', '.join(fields)
+
+        query = f"SELECT {formated_fields} FROM {table}"
+
+        if where:
+            query += f" WHERE {where}"
+
+        result = self.get_query_results_formated(query)
+        return result
+
+    def get_reference_period_id_from_periods_dates(self, info):
+        in_date, until_date = info.values()
+
+        data = {
+            "fields": ['*'],
+            "table": 'ReferencePeriode',
+            "where": f'`in`=\'{in_date}\' and until=\'{until_date}\''
+        }
+
+        ref_per = self.get_str_fields_generic(data)
+
     def get_city_id_by_name(self, city_name):
 
         data = {
             "fields": ["idIBGE"],
             "table": "locations",
-            "where": f'WHERE name=\'{city_name}\' and type=\'Municipio\''
+            "where": f'name=\'{city_name}\' and type=\'Municipio\''
         }
 
         city_id = self.get_str_fields_generic(data)
