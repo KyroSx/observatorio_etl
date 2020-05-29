@@ -9,7 +9,7 @@ class DataFrame:
         return cols
 
     def get_dataframe(self, number_of_rows):
-        file_path = "./data/FUNDEB_Municipio.csv"
+        file_path = "src/extract/csv/FUNDEB_Municipio.csv"
         encode = "windows-1252"
         cols = self.usecols()
 

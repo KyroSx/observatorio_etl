@@ -1,6 +1,6 @@
 import unittest
 import pandas
-from periods.period import get_sums_list, get_period_object_list
+from src.transform.period import (get_sums_list, get_period_object_list)
 
 
 class TestSumsInAcrelandiaPeriods(unittest.TestCase):

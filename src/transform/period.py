@@ -1,4 +1,4 @@
-from data.Data_Object import create_data_object
+from .models.Data_Object import create_data_object
 
 
 def period_options(period) -> int:

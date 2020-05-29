@@ -1,7 +1,8 @@
 import unittest
-from periods.reference_period import (get_reference_period,
-                                      transform_string_to_date, is_leap_year)
 import datetime
+from src.load.reference_period import (
+    get_reference_period,
+    transform_string_to_date, is_leap_year)
 
 
 class Test(unittest.TestCase):
