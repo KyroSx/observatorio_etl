@@ -2,17 +2,29 @@ from dataclasses import dataclass
 
 
 @dataclass
+class Data:
+    id: int
+    data: float
+    idInformation: int
+    idInformationDataType: int
+    idPeriod: int
+    idLocation: int
+    idGranularity: int
+
+
+@dataclass
 class Data_Object:
     """ Representation of Data Table on DW """
-    period_type: str
+    granularity: str
     value: float
     location_year: str
     location_city_name: str
     index: int
 
     def __str__(self):
+        string = f''
         string = f"{self.location_city_name}#{self.location_year}:\n"
-        string += f"{self.index}º {self.period_type} -> ${self.value}"
+        string += f"{self.index}º {self.granularity} -> ${self.value}"
         return string
 
 
