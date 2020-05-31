@@ -63,11 +63,39 @@ class Querys:
         ref_per = self.get_str_fields_generic(data)
         return ref_per
 
-    def get_city_id_by_name(self, city_name):
+    def get_granularity_id_from_period(self, period: str):
+
+        data = {
+            "fields": ["id"],
+            "table": "Granularity",
+            "where": f'granularity=\'{period}\''
+        }
+
+        return self.get_str_fields_generic(data)
+
+    def get_data_type_id(self, data_type):
+        data = {
+            "fields": ["id"],
+            "table": "DataType",
+            "where": f'datatype=\'{data_type}\''
+        }
+        return self.get_str_fields_generic(data)
+
+    def get_information_id_from_nick_name(self, nick_name: str):
+
+        data = {
+            "fields": ["id"],
+            "table": "Information",
+            "where": f'nickName=\'{nick_name}\''
+        }
+
+        return self.get_str_fields_generic(data)
+
+    def get_city_id_by_name(self, city_name: str):
 
         data = {
             "fields": ["idIBGE"],
-            "table": "locations",
+            "table": "Locations",
             "where": f'name=\'{city_name}\' and type=\'Municipio\''
         }
 
