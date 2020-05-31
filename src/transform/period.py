@@ -1,59 +1,47 @@
-from .models.Data_Object import create_data_object
 
-
-def period_options(period) -> int:
-    periods = {
+def period_constants(period) -> int:
+    periodes = {
         "bimonthly": 2,
         "quarterly": 3,
         "half-yearly": 6,
         "yearly": 12
     }
-    period_value = periods.get(period, "Not a valid period")
+    period_value = periodes.get(period, "Not a valid period")
 
     return period_value
 
 
-def get_sums_list(period_value, city_data_year) -> list:
-    city_period_sum_list = []
+def period_options(period):
+    period_value = period_constants(period)
+    total_months = 12
+    final_interval = (total_months / period_value) + (1)
 
-    start_interval = 0
-    end_interval = period_value
+    inverval = range(1, int(final_interval))
+    def start_interval(i): return (i*period_value)-(period_value-1)
+    def end_interval(i): return (i*period_value)
 
-    size = int(len(city_data_year)/period_value)
-
-    for _ in range(size):
-        city_period_sliced = city_data_year[start_interval:end_interval]
-        city_period_sum = city_period_sliced.sum()
-
-        city_period_sum_rounded = round(city_period_sum, 2)
-        city_period_sum_list.append(city_period_sum_rounded)
-
-        start_interval = end_interval
-        end_interval += period_value
-
-    return city_period_sum_list
+    return (inverval, start_interval, end_interval)
 
 
-def get_period_object_list(period, city_data, city_name, year) -> list:
-    period_value = period_options(period)
+def calculate_period(period, city_grouped):
+    inverval, start_inteval, end_interval = \
+        period_options(period)
 
-    city_data_year = city_data[year]
+    years = [f"{year}" for year in range(2007, 2020)]
 
-    city_period_sum_list = get_sums_list(period_value, city_data_year)
-    city_period_object_list = []
+    result_list = []
+    for index in inverval:
+        sliced = city_grouped[
+            (city_grouped['Mês'] >= (start_inteval(index))) &
+            (city_grouped['Mês'] <= (end_interval(index)))
+        ].sum()
 
-    data_dict = {}
+        result_years_list = []
+        for year in years:
+            value = round(sliced[year], 2)
+            result = (year, index, period, value)
+            result_years_list.append(result)
 
-    ''' need to move this responsibility to another place '''
-    for index, value in enumerate(city_period_sum_list):
-        data_dict = {
-            "period": period,
-            "value": value,
-            "year": year,
-            "city_name": city_name,
-            "index": index+1
-        }
-        data_o = create_data_object(data_dict)
-        city_period_object_list.append(data_o)
+        result_list.append(result_years_list)
 
-    return city_period_object_list
+    return result_list
