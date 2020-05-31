@@ -1,89 +1,60 @@
 import unittest
 import pandas
-from src.transform.period import (get_sums_list, get_period_object_list)
+from tests.unit.helpers.data_test import DataTest
+from src.transform.period import (calculate_period)
 
 
 class TestSumsInAcrelandiaPeriods(unittest.TestCase):
 
-    def get_acrelandia_series_2019(self):
-        num = [i for i in range(12, 24)]
-        datas = [
-            861747.15, 900609.50, 711703.16,
-            718405.94, 825357.96, 676517.09,
-            760446.15, 696022.61, 667612.52,
-            651903.12, 757361.32, 0]
+    def test_get_acrelandia_data(self):
+        dt = DataTest()
+        data = dt.get_data_input()
+        years = [f'{y}' for y in range(2007, 2020)]
+        columns = ['Município', 'UF', 'Mês'] + years
+        df = pandas.DataFrame(
+            data, columns=columns)
 
-        series = pandas.Series(datas, index=num)
+        self.assertIsInstance(df, pandas.DataFrame)
 
-        return series
+        return df
 
-    def get_response_from_sums_list(self, period_value):
-        ''' Before each '''
-        data = self.get_acrelandia_series_2019()
+    def test_acrelandia_yearly(self):
+        dt = DataTest()
+        correct_output = [3773651.1, 5089382.65, 5262367.19,
+                          5682387.07, 6687641.83, 6535497.11,
+                          6880002.1, 7481952.53, 7602625.99,
+                          8385945.55, 8485707.1, 8667882.31,
+                          8227686.52]
 
-        response = get_sums_list(period_value, data)
+        period = 'yearly'
+        index = 1
+        correct_output_values = dt.get_data_output_correct_yearly(
+            (correct_output, index, period))
 
-        return response
+        info = {
+            'period': period,
+            'correct_output_values': correct_output_values
+        }
 
-    def test_yearly_sum_in_acrelandia_2019(self):
-        ''' It should return correct sum on yearly '''
-        response = self.get_response_from_sums_list(12)
-        correct_value = [8227686.52]
+        self.test_get_periods_generic(info)
 
-        self.assertListEqual(response, correct_value)
+    def test_get_periods_generic(self, info={}):
+        if not info:
+            return
 
-        ''' result list should have one value only '''
-        size = len(response)
-        ANNUAL_SIZE = 1
+        df_formated = self.test_get_acrelandia_data()
+        period, correct_output_values = info.values()
 
-        self.assertEqual(size, ANNUAL_SIZE)
+        response = calculate_period(period, df_formated, '')
 
-    def test_half_yearly_sum_in_acrelandia_2019(self):
-        ''' It should return correct sum on half-yearly '''
-        response = self.get_response_from_sums_list(6)
-        correct_value = [4694340.80, 3533345.72]
+        self.assertListEqual(response, correct_output_values)
 
-        self.assertListEqual(response, correct_value)
-
-        ''' result list should have 2 values '''
-        size = len(response)
-        SEMESTRAL_SIZE = 2
-
-        self.assertEqual(size, SEMESTRAL_SIZE)
-
-    def test_quarterly_sum_in_acrelandia_2019(self):
-        ''' it should return 4 correct quarterly values '''
-        response = self.get_response_from_sums_list(3)
-        correct_value = [2474059.81, 2220280.99,
-                         2124081.28, 1409264.44]
-
-        self.assertListEqual(response, correct_value)
-
-        ''' result list should have 4 values '''
-        size = len(response)
-        TRIMESTRAL_SIZE = 4
-
-        self.assertEqual(size, TRIMESTRAL_SIZE)
-
-    def test_bimonthly_sum_in_acrelandia_2019(self):
-        ''' it should return 6 correct bimonthly values '''
-        response = self.get_response_from_sums_list(2)
-
-        correct_value = [1762356.65, 1430109.10,
+    '''
+    yearly 2019: correct_value = [8227686.52] 
+    half 2019: correct_value = [4694340.80, 3533345.72]
+    quarterly: correct_value = [2474059.81, 2220280.99,
+                                2124081.28, 1409264.44]
+    bim: correct_value = [1762356.65, 1430109.10,
                          1501875.05, 1456468.76,
-                         1319515.64, 757361.32]
-
-        self.assertListEqual(response, correct_value)
-
-        ''' result list should have 6 values '''
-        size = len(response)
-        BIMESTRAL_SIZE = 6
-
-        self.assertEqual(size, BIMESTRAL_SIZE)
-
-    def test_get_period_object_list_in_acrelandia_2019(self):
-        ''' This need to be done after refact the actual code '''
-        period = "anual"
-        city_data = ''
-        city_name = 'Acrelândia'
-        year = '2019'
+                         1319515.64, 757361.32]                    
+   '''

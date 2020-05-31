@@ -24,6 +24,52 @@ class TestDataBase(unittest.TestCase):
 
         self.database = query_object
 
+    def test_get_granularity_id_from_period(self):
+
+        granularitys = [
+            'bimonthly', 'quarterly',
+            'half-yearly', 'yearly']
+
+        granularitys_ids = ['1', '2', '3', '4']
+
+        info = {
+            'input_list': granularitys,
+            'correct_list': granularitys_ids,
+            'output_number': 0
+        }
+
+        self.test_generic_query_db(
+            function=self.database.get_granularity_id_from_period,
+            info=info)
+
+    def test_get_information_and_data_type_id(self):
+
+        information_nick_name = ['FUNDEB']
+        information_id = ['1']
+
+        data_type = ['float']
+        data_type_id = ['1']
+
+        info = {
+            'input_list': information_nick_name,
+            'correct_list': information_id,
+            'output_number': 0
+        }
+
+        self.test_generic_query_db(
+            function=self.database.get_information_id_from_nick_name,
+            info=info)
+
+        info = {
+            'input_list': data_type,
+            'correct_list': data_type_id,
+            'output_number': 0
+        }
+
+        self.test_generic_query_db(
+            function=self.database.get_data_type_id,
+            info=info)
+
     def test_get_city_id_by_name(self):
         ''' Test if the data:name == locations:id '''
 
