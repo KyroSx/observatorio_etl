@@ -54,8 +54,8 @@ def get_reference_period(period_type, year, index) -> tuple:
     if is_leap and end_month == 2:
         end_day += 1
 
-    in_date = transform_string_to_date(f'{year}-{start_month}-{start_day}')
-    until_date = transform_string_to_date(f'{year}-{end_month}-{end_day}')
+    in_date = f'{year}-{start_month}-{start_day}'
+    until_date = f'{year}-{end_month}-{end_day}'
 
     return in_date, until_date
 

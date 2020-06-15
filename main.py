@@ -2,14 +2,13 @@ import pandas
 import numpy as np
 from dataclasses import dataclass, field
 
-from src.load.database.connection import Database
-from src.load.database.querys.query import create_query_object
-from src.load.reference_period import get_reference_period
-
-from src.transform.standardize import standardize
-from src.transform.period import calculate_period
-
 from src.extract.dataframe import create_data_frame
+
+from src.load.reference_period import get_reference_period
+from src.load.load import apply_locations, get_all_reference_periodes_from_series
+
+from src.transform.standardize import standardize_years_values, fix_city_names
+
 from src.transform.dict_data_object_creation import (
     create_data_object_dict_list,
     calculate_all_periods_sums)
@@ -23,14 +22,14 @@ class Main:
 
     fundeb: pandas.DataFrame = pandas.DataFrame([])
     data_period_object_list = []
+    municipio = "Município"
 
     def extract(self):
-        self.fundeb = create_data_frame(120)
+        self.fundeb = create_data_frame(1000)
 
     def show(self):
         for data_period_object in self.data_period_object_list:
-            if data_period_object.location_city_name == 'Acrelândia':
-                print(data_period_object)
+            print(data_period_object)
 
     def transform(self):
 
@@ -38,28 +37,32 @@ class Main:
         list_data_dicts = []
 
         for year in years:
-            self.fundeb[year] = self.fundeb[year].apply(standardize)
+            self.fundeb[year] = self.fundeb[year].apply(
+                standardize_years_values)
 
-        citys = self.fundeb.groupby(["Município"])
+        self.fundeb[self.municipio] = self.fundeb[self.municipio].apply(
+            fix_city_names)
+
+        citys = self.fundeb.groupby([self.municipio])
         for city_name, _ in citys:
             ac = citys.get_group(city_name)
-            list_data_dicts += calculate_all_periods_sums(ac, city_name)
+            a = str(ac.iloc[0]['UF'])
+            list_data_dicts += calculate_all_periods_sums(ac, city_name, a)
 
         self.data_period_object_list = create_object_list(list_data_dicts)
 
-    def load(self):
-        for data_period_object in self.data_period_object_list:
-            period, index, year = data_period_object.granularity,\
-                data_period_object.index, data_period_object.location_year
-            in_d, until_d = get_reference_period(period, year, index)
+        df_o = pandas.DataFrame(
+            self.data_period_object_list, columns=['Object'])
 
-            d = Database()
-            q = create_query_object(d)
-            print(q.get_granularity_id_from_period(period))
+        df_o['Object'] = get_all_reference_periodes_from_series(df_o['Object'])
+        apply_locations(df_o['Object'])
+
+    def load(self):
+        ''  # load(self.data_period_object_list)
 
 
 if __name__ == "__main__":
     main = Main()
     main.extract()
     main.transform()
-    main.load()
+    # main.load()
