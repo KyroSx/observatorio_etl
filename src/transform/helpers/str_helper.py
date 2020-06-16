@@ -18,6 +18,6 @@ def remove_parenthesis(string):
 
 
 def switch_comma_to_dot(string):
-    sring = string.switch_char_to_another_char(',', '.')
+    string = string.switch_char_to_another_char(',', '.')
 
     return string

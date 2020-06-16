@@ -1,4 +1,4 @@
-from src.transform.period import calculate_period
+from transform.period import calculate_period
 
 
 def create_data_object_dict_list(city_name: str,

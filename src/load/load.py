@@ -1,9 +1,9 @@
-from src.transform.period import calculate_period
-from src.load.database.connection import create_database_object
-from src.load.database.querys.query import create_query_object
-from src.transform.helpers.str_helper import remove_char_from_string
-from src.load.reference_period import get_reference_period
-from src.transform.models.Data_Object import Data_Object
+from transform.period import calculate_period
+from load.database.connection import create_database_object
+from load.database.querys.query import create_query_object
+from transform.helpers.str_helper import remove_char_from_string
+from load.reference_period import get_reference_period
+from transform.models.Data_Object import Data_Object
 from pandas import Series
 
 from unidecode import unidecode

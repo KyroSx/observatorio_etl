@@ -1,6 +1,6 @@
 import re
 import locale
-from .helpers.str_helper import remove_parenthesis
+from transform.helpers.str_helper import remove_parenthesis
 
 
 def standardize_years_values(cell):
