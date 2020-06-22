@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from src.load.database.connection import Database, create_database_object
-from src.transform.helpers.str_helper import (
+from load.database.connection import Database, create_database_object
+from transform.helpers.str_helper import (
     remove_parenthesis, remove_char_from_string)
 
 

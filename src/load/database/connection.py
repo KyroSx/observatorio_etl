@@ -2,7 +2,7 @@ import mysql.connector
 
 from config import database_env as db
 from mysql.connector import errorcode
-from src.transform.helpers.str_helper import (
+from transform.helpers.str_helper import (
     remove_parenthesis, remove_char_from_string)
 
 
