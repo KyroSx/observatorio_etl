@@ -1,10 +1,12 @@
 from extract.Extract import Extract
 from validate.Validate import Validate
 from transform.Transform import Transform
+from stage.Stage import Stage
+
 from models.Fundeb import Fundeb
 
 # Extract Layer
-extract = Extract()
+extract = Extract(number_of_rows=120)
 extract.start()
 
 fundeb_dataframe = extract.end()
@@ -19,3 +21,9 @@ fundeb_obj_validated = validate.end()
 # Transform layer
 transform = Transform(fundeb_obj_validated, '')
 transform.start()
+
+periode_summed_series = transform.end()
+
+# Stage layer
+stage = Stage(periode_summed_series=periode_summed_series)
+stage.start()
