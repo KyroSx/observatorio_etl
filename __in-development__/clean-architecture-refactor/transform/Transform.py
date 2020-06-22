@@ -9,16 +9,11 @@ from models.DataPeriode import create_object_list_from_dict
 @dataclass
 class Transform:
     fundeb_obj_validated: Fundeb
-    # fundeb_validated: pandas.DataFrame
     periode_summed: pandas.Series = pandas.Series([])
+    data_period_object_list = []
 
     def start(self):
         print(f'Transforming: \n {self.fundeb_obj_validated}')
-        """
-            Dividir em group by
-            passar cada group by por cidade
-            calcular o periodo, retornar
-        """
 
         dataframe_grouped_by_city = self.fundeb_obj_validated \
             .get_dataframe_grouped_by_city()
@@ -29,12 +24,11 @@ class Transform:
             list_data_dicts += self._calculate_all_periods_sums(
                 df, name, uf)
 
-        data_period_object_list = create_object_list_from_dict(list_data_dicts)
-        for d in data_period_object_list:
-            print(d)
+        self.data_period_object_list = create_object_list_from_dict(
+            list_data_dicts)
 
     def end(self):
-        pass
+        return self.data_period_object_list
 
     def _calculate_all_periods_sums(self, city_grouped, city_name: str,
                                     city_uf: str):
