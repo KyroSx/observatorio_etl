@@ -8,6 +8,8 @@ database/database_env.py
 src/.directory
 
 config/database_env.py
-__in-development__/clean-architecture-refactor/load/database/config/db_env.py
+load/database/config/
 
-!__in-development__/clean-architecture-refactor/load/database/config/__init__.py
+!load/database/config/__init__.py
+
+load/database/config/env.py
