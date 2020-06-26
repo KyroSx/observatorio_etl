@@ -1,4 +1,4 @@
-# Observatorio 👁‍🗨🎲 
+# Observatorio 👁‍🗨🎲
 
 ## Description 📜
 
@@ -21,7 +21,7 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
   - Make sure you have at least [Python](https://www.python.org/) 3.7.4 installed in your machine
 
   - Clone this repository with one of these:
-    - Git: 
+    - Git:
          ```shell
          $ git clone https://github.com/KyroSx/observatorio_etl.git
          ```
@@ -37,11 +37,11 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
 
   - Create your own database config file, by running:
      ```shell
-     $ touch database/database_env.py
-     $ echo 'DB_USER = "your-database-user"\nDB_PASSWORD = "your-database-password"\nDB_NAME = "your-database-name"\nHOST = "127.0.0.1"' >> database/database_env.py
+     $ touch load/database/config/env.py
+     $ echo 'DB_USER = "your-database-user"\nDB_PASSWORD = "your-database-password"\nDB_NAME = "your-database-name"\nHOST = "127.0.0.1"' >>  load/database/config/env.py
      ```
-  
-    - It needs to look like this: 
+
+    - It needs to look like this:
         ```python
         DB_USER = "your-database-user"
         DB_PASSWORD = "your-database-password"
