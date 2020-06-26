@@ -2,7 +2,7 @@
 import mysql.connector
 from mysql.connector import errorcode
 
-import config.db_env as db
+import config.env as db
 
 
 class Database:
