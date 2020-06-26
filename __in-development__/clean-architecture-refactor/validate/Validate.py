@@ -27,7 +27,6 @@ class Validate:
     # Public methods
 
     def start(self):
-        print(F'Validating: \n {self.fundeb_obj.dataframe}')
         self.fundeb_validated = self.fundeb_obj.dataframe
 
         city_col = self.fundeb_obj.city
@@ -42,7 +41,6 @@ class Validate:
                 self._standardize_years_values)
 
     def end(self):
-        print(f'Returning(Validate): \n {self.fundeb_validated} \n')
         self.fundeb_obj.dataframe = self.fundeb_validated
         return self.fundeb_obj
 

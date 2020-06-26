@@ -28,6 +28,4 @@ class Stage:
 
         data_periode.reference_periode = reference_periode
 
-        print(data_periode.reference_periode)
-
         return data_periode

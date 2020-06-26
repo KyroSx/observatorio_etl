@@ -12,12 +12,10 @@ class Extract:
 
     def start(self):
         """ Get the dataframe from a csv file  """
-        print(f"Extract the {self.csv}")
         self.dataframe = self._get_dataframe()
 
     def end(self) -> pandas.DataFrame:
         """ Return a dataframe """
-        print(f'Returning({__name__}): \n {self.dataframe} \n')
         return self.dataframe
 
     def _usecols(self):

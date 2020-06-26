@@ -12,8 +12,6 @@ class Transform:
     periode_summed_series: pandas.Series = pandas.Series([])
 
     def start(self):
-        print(f'Transforming: \n {self.fundeb_obj_validated}')
-
         dataframe_grouped_by_city = self.fundeb_obj_validated \
             .get_dataframe_grouped_by_city()
 
