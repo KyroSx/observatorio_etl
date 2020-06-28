@@ -37,8 +37,8 @@ We are using a huge CSV open data file provided by the Brazil Government. The da
 
   - Create your own database config file, by running:
      ```shell
-     $ touch load/database/config/env.py
-     $ echo 'DB_USER = "your-database-user"\nDB_PASSWORD = "your-database-password"\nDB_NAME = "your-database-name"\nHOST = "127.0.0.1"' >>  load/database/config/env.py
+     $ touch .env
+     $ echo 'DB_USER = "your-database-user"\nDB_PASSWORD = "your-database-password"\nDB_NAME = "your-database-name"\nHOST = "127.0.0.1"' >> .env
      ```
 
     - It needs to look like this:
