@@ -8,7 +8,7 @@ load_dotenv()
 
 
 class Database:
-    cnx = ''
+    connection = ''
     config = {
         'user': os.getenv('DB_USER'),
         'password': os.getenv('DB_PASSWORD'),
@@ -20,7 +20,7 @@ class Database:
     def start_connection(self):
         print(self.config)
         try:
-            self.cnx = mysql.connector.connect(**self.config)
+            self.connection = mysql.connector.connect(**self.config)
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print('Something is wrong with your user or password')
@@ -30,4 +30,4 @@ class Database:
                 print(err)
 
     def close_connection(self):
-        self.cnx.close()
+        self.connection.close()

@@ -32,3 +32,12 @@ stage.start()
 # Load layer
 db = Database()
 db.start_connection()
+
+cursor = db.connection.cursor()
+
+cursor.execute('SELECT * FROM Information')
+
+for r in cursor:
+    print(r)
+
+db.close_connection()
