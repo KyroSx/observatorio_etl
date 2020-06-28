@@ -1,21 +1,24 @@
 
+import os
 import mysql.connector
 from mysql.connector import errorcode
 
-import config.env as db
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class Database:
     cnx = ''
     config = {
-        'user': db.DB_USER,
-        'password': db.DB_PASSWORD,
-        'host': db.HOST,
-        'database': db.DB_NAME,
+        'user': os.getenv('DB_USER'),
+        'password': os.getenv('DB_PASSWORD'),
+        'host': os.getenv('HOST'),
+        'database': os.getenv('DB_NAME'),
         'raise_on_warnings': True
     }
 
     def start_connection(self):
+        print(self.config)
         try:
             self.cnx = mysql.connector.connect(**self.config)
         except mysql.connector.Error as err:
