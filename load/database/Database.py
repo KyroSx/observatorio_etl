@@ -18,16 +18,18 @@ class Database:
     }
 
     def start_connection(self):
-        print(self.config)
         try:
             self.connection = mysql.connector.connect(**self.config)
+            print('🎲 connection started on the db:', self.config['database'])
         except mysql.connector.Error as err:
+            print('🚫 db connection error')
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print('Something is wrong with your user or password')
+                raise ValueError(
+                    'Something is wrong with your user or password')
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                print('Database does not exist')
+                raise ValueError('Database does not exist')
             else:
-                print(err)
+                raise ValueError(err)
 
     def close_connection(self):
         self.connection.close()
