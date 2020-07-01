@@ -1,7 +1,7 @@
 
 import os
 import mysql.connector
-from mysql.connector import errorcode
+from mysql.connector import errorcode, cursor
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -33,3 +33,6 @@ class Database:
 
     def close_connection(self):
         self.connection.close()
+
+    def execute_query(self, cursor: cursor, query: str):
+        pass

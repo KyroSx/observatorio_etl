@@ -35,17 +35,17 @@ periode_summed_series = stage.end()
 db = Database()
 db.start_connection()
 
-#cur = db.connection.cursor()
+cur = db.connection.cursor()
 
 get_all_locations_query = 'SELECT idIBGE, idIBGE_MemberOf, name, type, nickName FROM Locations WHERE name=\'Cascavel\' and `type`=\'Município\''
 
-# cur.execute(get_all_locations_query)
+cur.execute(get_all_locations_query)
 
-# locations_dict = {
-#     f'{name}-{idIBGE}': (idIBGE, nickName, idIBGE_MemberOf, typed)
-#     for idIBGE, idIBGE_MemberOf, name, typed, nickName in cur
-# }
+locations_dict = {
+    f'{name}-{idIBGE}': (idIBGE, nickName, idIBGE_MemberOf, typed)
+    for idIBGE, idIBGE_MemberOf, name, typed, nickName in cur
+}
 
-# cur.close()
+cur.close()
 
 db.close_connection()
