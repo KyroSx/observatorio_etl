@@ -13,3 +13,5 @@ load/database/config/
 !load/database/config/__init__.py
 
 load/database/config/env.py
+
+.env
