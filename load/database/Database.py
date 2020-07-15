@@ -1,4 +1,3 @@
-
 import os
 import mysql.connector
 from mysql.connector import errorcode, cursor
@@ -32,7 +31,21 @@ class Database:
                 raise ValueError(err)
 
     def close_connection(self):
-        self.connection.close()
+        try:
+            self.connection.close()
+            print('🔌 Connection closed')
+        except:
+            print('Failed to close connection')
 
-    def execute_query(self, cursor: cursor, query: str):
-        pass
+    def execute_query(self, query: str) -> list:
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(query)
+
+            result = [c for c in cursor]
+
+            return result
+        except:
+            print('Something went wrong')
+        finally:
+            cursor.close()

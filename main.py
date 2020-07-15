@@ -25,6 +25,8 @@ transform.start()
 
 periode_summed_series = transform.end()
 
+print(periode_summed_series)
+
 # Stage layer
 stage = Stage(periode_summed_series=periode_summed_series)
 stage.start()
@@ -35,17 +37,15 @@ periode_summed_series = stage.end()
 db = Database()
 db.start_connection()
 
-cur = db.connection.cursor()
+""" get_all_locations_query = 'SELECT id_ibge FROM `Location`'
 
-get_all_locations_query = 'SELECT idIBGE, idIBGE_MemberOf, name, type, nickName FROM Locations WHERE name=\'Cascavel\' and `type`=\'Município\''
-
-cur.execute(get_all_locations_query)
+cur = db.execute_query(query=get_all_locations_query)
 
 locations_dict = {
-    f'{name}-{idIBGE}': (idIBGE, nickName, idIBGE_MemberOf, typed)
-    for idIBGE, idIBGE_MemberOf, name, typed, nickName in cur
+    f'{idIBGE}': (idIBGE)
+    for idIBGE in cur
 }
 
-cur.close()
+print(locations_dict) """
 
 db.close_connection()
