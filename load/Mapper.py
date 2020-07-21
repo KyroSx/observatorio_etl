@@ -26,14 +26,14 @@ class Mapper:
     def city_name_to_id(self, city_name: str) -> int:
         unidecoded_city_name = unidecode(city_name)
         location_id = self.locations.get(
-            unidecoded_city_name, "NOT FOUND")
+            unidecoded_city_name, 'NOT FOUND')
 
         return location_id
 
     def period_name_to_id(self, period: str) -> int:
         unidecode_period_name = unidecode(period)
         granularity_id = self.granularities.get(
-            unidecode_period_name, get_id())
+            unidecode_period_name, 'NOT FOUND')
 
         return granularity_id
 

@@ -75,7 +75,7 @@ class Load:
         self._data_dw_df['data'] = self.periode_summed_series.apply(
             lambda period: period.value)
 
-        print(self._data_dw_df.values.tolist())
+        print(self._data_dw_df)
 
     def end(self):
         self.database.close_connection()
