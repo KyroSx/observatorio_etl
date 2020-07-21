@@ -8,7 +8,7 @@ from typing import Tuple, List, Callable
 class ReferencePeriode:
 
     def get_reference_period(self, period_type, year, index) -> tuple:
-        start_day = 1
+        start_day = '01'
 
         start_month_list, ratio = self._referece_period_strateggy(period_type)
 
@@ -40,6 +40,12 @@ class ReferencePeriode:
         end_day = self._get_end_day(delta)
         start_month = start_month_list[index-1]
         end_month = delta
+
+        if end_month < 10:
+            end_month = f'0{end_month}'
+
+        if start_month < 10:
+            start_month = f'0{start_month}'
 
         return end_day, start_month, end_month
 
