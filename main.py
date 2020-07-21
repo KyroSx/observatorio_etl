@@ -3,6 +3,7 @@ from validate.Validate import Validate
 from transform.Transform import Transform
 from stage.Stage import Stage
 from load.database.Database import Database
+from load.Load import Load
 
 from models.Fundeb import Fundeb
 
@@ -20,12 +21,10 @@ validate.start()
 fundeb_obj_validated = validate.end()
 
 # Transform layer
-transform = Transform(fundeb_obj_validated, '')
+transform = Transform(fundeb_obj_validated)
 transform.start()
 
 periode_summed_series = transform.end()
-
-print(periode_summed_series)
 
 # Stage layer
 stage = Stage(periode_summed_series=periode_summed_series)
@@ -35,17 +34,8 @@ periode_summed_series = stage.end()
 
 # Load layer
 db = Database()
-db.start_connection()
+load = Load(database=db,
+            periode_summed_series=periode_summed_series)
 
-""" get_all_locations_query = 'SELECT id_ibge FROM `Location`'
-
-cur = db.execute_query(query=get_all_locations_query)
-
-locations_dict = {
-    f'{idIBGE}': (idIBGE)
-    for idIBGE in cur
-}
-
-print(locations_dict) """
-
-db.close_connection()
+load.start()
+load.end()
