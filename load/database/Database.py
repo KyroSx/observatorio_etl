@@ -46,6 +46,6 @@ class Database:
 
             return result
         except:
-            print('Something went wrong')
+            print('Something went wrong with the query')
         finally:
             cursor.close()
