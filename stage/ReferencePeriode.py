@@ -66,13 +66,13 @@ class ReferencePeriode:
         """ Identify if a year is leap """
         year = int(year)
 
-        def isMultipleOf(number): return year % number == 0
+        def is_multiple_of(number): return year % number == 0
 
-        if isMultipleOf(4):
-            if not isMultipleOf(100):
+        if is_multiple_of(4):
+            if not is_multiple_of(100):
                 return True
 
-        if isMultipleOf(400):
+        if is_multiple_of(400):
             return True
 
         return False
