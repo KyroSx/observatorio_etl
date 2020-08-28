@@ -10,7 +10,7 @@ class ReferencePeriode:
     def get_reference_period(self, period_type, year, index) -> tuple:
         start_day = '01'
 
-        start_month_list, ratio = self._referece_period_strateggy(period_type)
+        start_month_list, ratio = self._reference_period_strategy(period_type)
 
         end_day, start_month, end_month = self._get_day_and_month(
             start_month_list, index, ratio)
@@ -24,7 +24,7 @@ class ReferencePeriode:
 
         return in_date, until_date
 
-    def _referece_period_strateggy(self, period_type: str) -> tuple:
+    def _reference_period_strategy(self, period_type: str) -> tuple:
         """ Design pattern to return calculations variables """
         periods = {
             'bimonthly': ([x for x in range(1, 12) if x % 2 == 1], 2),
@@ -66,10 +66,13 @@ class ReferencePeriode:
         """ Identify if a year is leap """
         year = int(year)
 
-        if year % 4 == 0:
-            if year % 100 != 0:
+        def isMultipleOf(number): return year % number == 0
+
+        if isMultipleOf(4):
+            if not isMultipleOf(100):
                 return True
-        if year % 400 == 0:
+
+        if isMultipleOf(400):
             return True
 
         return False
