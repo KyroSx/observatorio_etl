@@ -7,7 +7,6 @@ class Extract:
 
     number_of_rows: int = 66829
 
-    csv: str = 'extract/fundeb.csv'
     dataframe: pandas.DataFrame = pandas.DataFrame([])
 
     def start(self):
@@ -25,7 +24,7 @@ class Extract:
 
     def _get_dataframe(self) -> pandas.DataFrame:
         """ Config for read a csv """
-        file_path = self.csv
+        file_path = "extract/fundeb.csv"
         encode = "windows-1252"
         cols = self._usecols()
 
