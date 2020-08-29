@@ -48,7 +48,7 @@ class Validate:
     def _standardize_years_values(self, cell):
         locale.setlocale(locale.LC_NUMERIC, "en_DK.UTF-8")
         value = ""
-        regexs = {
+        regexes = {
             "correct": re.compile(r"^\d*\.?\d*$"),
             "hyphen": re.compile(r"^\-$"),
         }
@@ -58,9 +58,9 @@ class Validate:
         if type(cell) is str:
             cell = cell.strip()
 
-        if regexs["correct"].match(cell):
+        if regexes["correct"].match(cell):
             value = cell
-        elif regexs["hyphen"].match(cell):
+        elif regexes["hyphen"].match(cell):
             value = "0"
         else:
             value = remove_parenthesis(cell)
