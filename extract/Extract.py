@@ -10,11 +10,9 @@ class Extract:
     dataframe: pandas.DataFrame = pandas.DataFrame([])
 
     def start(self):
-        """ Get the dataframe from a csv file  """
         self.dataframe = self._get_dataframe()
 
     def end(self) -> pandas.DataFrame:
-        """ Return a dataframe """
         return self.dataframe
 
     def _usecols(self):
@@ -23,7 +21,6 @@ class Extract:
         return cols
 
     def _get_dataframe(self) -> pandas.DataFrame:
-        """ Config for read a csv """
         file_path = "extract/fundeb.csv"
         encode = "windows-1252"
         cols = self._usecols()

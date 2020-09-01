@@ -8,7 +8,7 @@ from load.Load import Load
 from models.Fundeb import Fundeb
 
 # Extract Layer
-extract = Extract()
+extract = Extract(number_of_rows=120)
 extract.start()
 
 fundeb_dataframe = extract.end()
@@ -33,11 +33,9 @@ periode_summed_series = stage.end()
 
 
 # Load layer
-'''
 db = Database()
 load = Load(database=db,
             periode_summed_series=periode_summed_series)
 
 load.start()
 load.end()
-'''

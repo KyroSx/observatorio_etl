@@ -7,6 +7,10 @@ from typing import Tuple, List, Callable
 @dataclass
 class ReferencePeriode:
 
+    THREE = 3
+    SIX = 6
+    TWELVE = 12
+
     def get_reference_period(self, period_type, year, index) -> tuple:
         start_day = '01'
 
@@ -15,9 +19,9 @@ class ReferencePeriode:
         end_day, start_month, end_month = self._get_day_and_month(
             start_month_list, index, ratio)
 
-        is_leap = self._is_leap_year(year)
-        if is_leap and end_month == 2:
-            end_day += 1
+        if end_month == 2:
+            if self._is_leap_year(year):
+                end_day += 1
 
         in_date = f'{year}-{start_month}-{start_day}'
         until_date = f'{year}-{end_month}-{end_day}'
@@ -25,17 +29,19 @@ class ReferencePeriode:
         return in_date, until_date
 
     def _reference_period_strategy(self, period_type: str) -> tuple:
-        """ Design pattern to return calculations variables """
+        def odd_list(): return [x for x in range(1, 12) if x % 2 == 1]
+
+        def list_from_steps(step): return [x for x in range(1, 12, step)]
+
         periods = {
-            'bimonthly': ([x for x in range(1, 12) if x % 2 == 1], 2),
-            'quarterly': ([x for x in range(1, 12, 3)], 3),
-            'half-yearly': ([x for x in range(1, 12, 6)], 6),
-            'yearly': ([x for x in range(1, 12, 12)], 12)
+            'bimonthly': (odd_list(), 2),
+            'quarterly': (list_from_steps(self.THREE), self.THREE),
+            'half-yearly': (list_from_steps(self.SIX), self.SIX),
+            'yearly': (list_from_steps(self.TWELVE), self.TWELVE)
         }
         return periods.get(period_type)
 
     def _get_day_and_month(self, start_month_list: list, index: int, ratio: int):
-        """ Return day and month variables to calculate period """
         delta = index*ratio
         end_day = self._get_end_day(delta)
         start_month = start_month_list[index-1]
@@ -50,7 +56,6 @@ class ReferencePeriode:
         return end_day, start_month, end_month
 
     def _get_end_day(self, month: int) -> int:
-        ''' Return the last day of a month '''
         return {
             2: 28,
             3: 31,
@@ -63,7 +68,6 @@ class ReferencePeriode:
         }.get(month)
 
     def _is_leap_year(self, year: str) -> bool:
-        """ Identify if a year is leap """
         year = int(year)
 
         def is_multiple_of(number): return year % number == 0

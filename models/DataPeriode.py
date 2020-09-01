@@ -13,6 +13,10 @@ class DataPeriode:
     value: float
     reference_periode: tuple = ('', '')
 
+    @property
+    def city_uf(self) -> str:
+        return f'{self.city_name}-{self.uf}'
+
     def get_all_values_tuple(self) -> tuple:
         return (self.city_name, self.uf, self.index,
                 self.periode, self.year, self.value,

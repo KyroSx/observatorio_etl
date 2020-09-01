@@ -33,6 +33,7 @@ class Transform:
                                     city_uf: str):
         periods = ['bimonthly', 'quarterly',
                    'half-yearly', 'yearly']
+        periods = ['yearly']
         list_of_periodes_sum = []
         list_data_dicts = []
         for period in periods:
@@ -42,7 +43,7 @@ class Transform:
 
         return list_data_dicts
 
-    def _create_data_object_dict_list(self, city_name: str,
+    def _create_data_object_dict_list(self, city_name: tuple,
                                       city_uf: str,
                                       list_of_periodes_sum: list):
         list_data_dicts = []
@@ -51,7 +52,7 @@ class Transform:
                 year, index, periode, value = periode_sum
 
                 data_dict = {
-                    'city_name': city_name,
+                    'city_name': city_name[0],
                     'UF': city_uf,
                     'year': year,
                     'index': index,
@@ -65,13 +66,13 @@ class Transform:
     def _calculate_period(self, period: str,
                           city_grouped: pandas.DataFrame) -> List[int]:
 
-        inverval, start_inteval, end_interval = \
+        interval, start_inteval, end_interval = \
             self._period_options(period)
 
         years = [f"{year}" for year in range(2007, 2020)]
 
         result_list = []
-        for index in inverval:
+        for index in interval:
             sliced = city_grouped[
                 (city_grouped['Mês'] >= (start_inteval(index))) &
                 (city_grouped['Mês'] <= (end_interval(index)))
@@ -105,8 +106,8 @@ class Transform:
         total_months = 12
         final_interval = (total_months / period_value) + (1)
 
-        inverval = range(1, int(final_interval))
+        interval = range(1, int(final_interval))
         def start_interval(i): return (i*period_value)-(period_value-1)
         def end_interval(i): return (i*period_value)
 
-        return (inverval, start_interval, end_interval)
+        return (interval, start_interval, end_interval)

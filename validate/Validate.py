@@ -20,11 +20,8 @@ def remove_parenthesis(string):
 @dataclass
 class Validate:
 
-    # Public atributes
     fundeb_obj: Fundeb
     fundeb_validated: pandas.DataFrame = pandas.DataFrame([])
-
-    # Public methods
 
     def start(self):
         self.fundeb_validated = self.fundeb_obj.dataframe
@@ -44,7 +41,6 @@ class Validate:
         self.fundeb_obj.dataframe = self.fundeb_validated
         return self.fundeb_obj
 
-    # Private methods
     def _standardize_years_values(self, cell):
         locale.setlocale(locale.LC_NUMERIC, "en_DK.UTF-8")
         value = ""
@@ -69,9 +65,7 @@ class Validate:
         return float(value)
 
     def _fix_city_names(self, city_name: str):
-        fixed_city_name = self._get_correct_city_name(city_name)
-
-        return fixed_city_name
+        return self._get_correct_city_name(city_name)
 
     def _get_correct_city_name(self, city_name: str):
         return {

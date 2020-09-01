@@ -1,11 +1,16 @@
-from dataclasses import dataclass
+class DataDWFields:
+    LOCATION = "id_location"
+    GRANULARITY = "id_granularity"
+    REFERENCE_PERIOD = "id_reference_period"
+    INFORMATION = "id_information"
+    DATA_TYPE = "id_information_datatype"
+    DATA = "data"
 
 
-@dataclass
-class DataDW:
-    data: float
-    id_information: int
-    id_information_datatype: int
-    id_reference_period: int
-    id_location: int
-    id_granularity: int
+class DWTables:
+    LOCATION = "Location"
+    GRANULARITY = "Granularity"
+    REFERENCE_PERIOD = "ReferencePeriod"
+    INFORMATION = "Information"
+    DATA_TYPE = "DataType"
+    DATA = "Data"
