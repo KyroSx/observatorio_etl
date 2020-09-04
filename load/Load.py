@@ -4,28 +4,16 @@ from .database.Database import Database
 
 from models.DataDW import DataDWFields, DWTables
 from helpers.decoder import decode
+from helpers.join import join
+
+from load.repositories.LocationsRepository import LocationsRepository
+from load.repositories.GranularitiesRepository import GranularitiesRepository
+from load.repositories.ReferencePeriodRepository import ReferencePeriodRepository
+from load.repositories.InformationsRepository import InformationsRepository
+from load.repositories.DataTypesRepository import DataTypesRepository
+
+from load.repositories.Repository import Repository
 from .Mapper import Mapper
-
-
-def get_location_dict():
-    file_path = "load/ibge.csv"
-    encode = "windows-1252"
-    df = pandas.read_csv(
-        filepath_or_buffer=file_path,
-        encoding=encode,
-        sep=";",
-        usecols=[2, 3],
-    )
-
-    MUN = 'Município-UF'
-    IBGE = 'IBGE'
-
-    locations = {
-        decode(row[MUN]): row[IBGE]
-        for _, row in df.iterrows()
-    }
-
-    return locations
 
 
 @dataclass
@@ -38,51 +26,19 @@ class Load:
     def start(self):
         self.database.start_connection()
 
-        '''
-        qr_locations = self.database.execute_query(
-            'SELECT `name`, `id_ibge` FROM `Location`')
-        '''
+        repository = Repository(database=self.database)
 
-        def query(query): return self.database.execute_query(query)
+        locations = LocationsRepository(repository).fetch_locations()
 
-        qr_granularity = query(
-            f'SELECT `id`, `granularity` FROM `{DWTables.GRANULARITY}`')
+        granularities = GranularitiesRepository(
+            repository).fetch_granularities()
 
-        qr_rf_periods = query(
-            f'SELECT `id`, `in_date`, `until_date` FROM `{DWTables.REFERENCE_PERIOD}`')
+        rf_periods = ReferencePeriodRepository(
+            repository).fetch_reference_periods()
 
-        qr_info = query(
-            f'SELECT `id`, `nickname` FROM `{DWTables.INFORMATION}`'
-        )
+        info = InformationsRepository(repository).fetch_informations()
 
-        qr_data_type = query(
-            f'SELECT `id`, `datatype` FROM `{DWTables.DATA_TYPE}`')
-
-        '''
-        locations = {
-            f'{unidecode(name)}': idIBGE
-            for name, idIBGE in qr_locations
-        }
-        '''
-
-        locations = get_location_dict()
-
-        granularities = {f'{decode(g)}': i for i, g in qr_granularity}
-
-        rf_periods = {
-            (in_date.__str__(), until_date.__str__()): id_rfp
-            for id_rfp, in_date, until_date in qr_rf_periods
-        }
-
-        info = {
-            nickname: idf
-            for idf, nickname in qr_info
-        }
-
-        dt_type = {
-            datatype: iddtp
-            for iddtp, datatype in qr_data_type
-        }
+        dt_type = DataTypesRepository(repository).fetch_data_types()
 
         self.fill_all_data_dw_fields(
             locations, granularities, rf_periods, info, dt_type)
@@ -100,23 +56,24 @@ class Load:
             DataDWFields.GRANULARITY,
         ]
 
-        def join(list_): return ', '.join(list_)
-
         id_list = [
-            f'{int(row[field])}' if not field == DataDWFields.DATA else f'{row[field]}'
+            str(row[field]) if field == DataDWFields.DATA else str(
+                int(row[field]))
             for field in fields_list
         ]
 
-        q = f"INSERT INTO {DWTables.DATA}"
-        q += f"({join(fields_list)})"
-        q += f" VALUES ({join(id_list)})"
-        # print(q)
+        query = f"INSERT INTO {DWTables.DATA}"
+        query += f"({join(fields_list)})"
+        query += f" VALUES ({join(id_list)})"
+
+        print(query)
+        return query
 
     def fill_all_data_dw_fields(self, locations, granularities, rf_periods, info, dt_type):
         mapper = Mapper(locations, granularities, rf_periods, info, dt_type)
 
         actions = {
-            DataDWFields.LOCATION: lambda period: mapper.city_name_to_id(period.city_uf),
+            DataDWFields.LOCATION: lambda period: mapper.city_name_to_id(period.city_name),
             DataDWFields.GRANULARITY: lambda period: mapper.period_name_to_id(period.periode),
             DataDWFields.REFERENCE_PERIOD: lambda period: mapper.reference_period_to_id(period.reference_periode),
             DataDWFields.INFORMATION: lambda period: mapper.get_information_id(),
@@ -129,7 +86,6 @@ class Load:
                 function)
 
         df = self._data_dw_df
-        # self._data_dw_df.apply(self.create_insert_query)
 
         for _, row in df.iterrows():
             self.create_insert_query(row)

@@ -31,7 +31,6 @@ stage = Stage(periode_summed_series=periode_summed_series)
 stage.start()
 periode_summed_series = stage.end()
 
-
 # Load layer
 db = Database()
 load = Load(database=db,

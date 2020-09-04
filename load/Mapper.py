@@ -15,9 +15,8 @@ class Mapper:
 
     def city_name_to_id(self, city_uf: str) -> int:
         r = self.locations.get(decode(city_uf), self.NOT_FOUND)
-
-        if r is self.NOT_FOUND:
-            print('********', r, city_uf)
+        if 'Cascavel' in city_uf:
+            print('CITY-UF ~~>', city_uf, r)
         return r
 
     def period_name_to_id(self, period: str) -> int:

@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 import pandas
 
+from models.FundebColumns import FundebColumns
+
 
 @dataclass
 class Extract:
@@ -18,6 +20,7 @@ class Extract:
     def _usecols(self):
         cols = [i for i in range(1, 18)]
         del cols[2]
+
         return cols
 
     def _get_dataframe(self) -> pandas.DataFrame:

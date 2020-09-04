@@ -67,63 +67,34 @@ class Validate:
     def _fix_city_names(self, city_name: str):
         return self._get_correct_city_name(city_name)
 
-    '''
-    def _get_correct_city_name(self, city_name: str):
-        return {
-            "Belém de São Francisco": "Belém do São Francisco",
-            "Biritiba-Mirim": "Biritiba Mirim",
-            "Brasópolis": "Brazópolis",
-            "Couto de Magalhães": "Couto Magalhães",
-            "Eldorado dos Carajás": "Eldorado do Carajás",
-            "Embu": "Embu das Artes",
-            "Florínia": "Florínea",
-            "Iguaraci": "Iguaracy",
-            "Itapagé": "Itapajé",
-            "Lagoa do Itaenga": "Lagoa de Itaenga",
-            "Moji Mirim": "Mogi Mirim",
-            "Muquém de São Francisco": "Muquém do São Francisco",
-            "Olho-d'Água do Borges": "Olho d'Água do Borges",
-            "Parati": "Paraty",
-            "Passa-Vinte": "Passa Vinte",
-            "Pingo-d'Água": "Pingo d'Água",
-            "Poxoréo": "Poxoréu",
-            "Santa Isabel do Pará": "Santa Izabel do Pará",
-            # "Santa Teresinha": "Santa Terezinha",
-            "Santana do Livramento": "Sant'Ana do Livramento",
-            "Seridó": "Junco do Seridó",
-            "São Domingos de Pombal": "São Domingos",
-            "São Luís do Paraitinga": "São Luiz do Paraitinga",
-            "São Valério da Natividade": "São Valério",
-            "Trajano de Morais": "Trajano de Moraes"
-        }.get(city_name, city_name)
-    '''
-
     def _get_correct_city_name(self, city_name: str):
         comaprison = {
-            "Belém de São Francisco-PE": "Belém do São Francisco",
-            "Biritiba-Mirim-SP": "Biritiba Mirim",
-            "Brasópolis-MG": "Brazópolis",
-            "Couto de Magalhães-TO": "Couto Magalhães",
-            "Eldorado dos Carajás-PA": "Eldorado do Carajás",
-            "Embu-SP": "Embu das Artes",
-            "Florínia-SP": "Florínea",
-            "Iguaraci-PE": "Iguaracy",
-            "Itapagé-CE": "Itapajé",
-            "Lagoa do Itaenga-PE": "Lagoa de Itaenga",
-            "Moji Mirim-SP": "Mogi Mirim",
-            "Muquém de São Francisco-BA": "Muquém do São Francisco",
-            "Olho-d'Água do Borges-RN": "Olho d'Água do Borges",
-            "Parati-RJ": "Paraty",
-            "Passa-Vinte-MG": "Passa Vinte",
-            "Pingo-d'Água-MG": "Pingo d'Água",
-            "Poxoréo-MT": "Poxoréu",
-            "Santa Isabel do Pará-PA": "Santa Izabel do Pará",
-            # "Santa Teresinha": "Santa Terezinha",
-            "Santana do Livramento-RS": "Sant'Ana do Livramento",
-            "Seridó-PB": "Junco do Seridó",
-            "São Domingos de Pombal-PB": "São Domingos",
-            "São Luís do Paraitinga-SP": "São Luiz do Paraitinga",
-            "São Valério da Natividade-TO": "São Valério",
-            "Trajano de Morais-RJ": "Trajano de Moraes"
+            "Belém de São Francisco-PE": "Belém do São Francisco-PE",
+            "Biritiba-Mirim-SP": "Biritiba Mirim-SP",
+            "Brasópolis-MG": "Brazópolis-MG",
+            "Couto de Magalhães-TO": "Couto Magalhães-TO",
+            "Eldorado dos Carajás-PA": "Eldorado do Carajás-PA",
+            "Embu-SP": "Embu das Artes-SP",
+            "Florínia-SP": "Florínea-SP",
+            "Iguaraci-PE": "Iguaracy-PE",
+            "Itapagé-CE": "Itapajé-CE",
+            "Lagoa do Itaenga-PE": "Lagoa de Itaenga-PE",
+            "Moji Mirim-SP": "Mogi Mirim-SP",
+            "Muquém de São Francisco-BA": "Muquém do São Francisco-BA",
+            "Olho-d'Água do Borges-RN": "Olho d'Água do Borges-RN",
+            "Parati-RJ": "Paraty-RJ",
+            "Passa-Vinte-MG": "Passa Vinte-MG",
+            "Pingo-d'Água-MG": "Pingo d'Água-MG",
+            "Poxoréo-MT": "Poxoréu-MT",
+            "Santa Isabel do Pará-PA": "Santa Izabel do Pará-PA",
+            "Santana do Livramento-RS": "Sant'Ana do Livramento-RS",
+            "Seridó-PB": "Junco do Seridó-PB",
+            "São Domingos de Pombal-PB": "São Domingos-PB",
+            "São Luís do Paraitinga-SP": "São Luiz do Paraitinga-SP",
+            "São Valério da Natividade-TO": "São Valério-TO",
+            "Trajano de Morais-RJ": "Trajano de Moraes-RJ",
+            "Presidente Juscelino-RN": "Serra Caiada-RN",
+            "Santa Teresinha-BA": "Santa Terezinha-BA"
         }
+
         return comaprison.get(city_name, city_name)
