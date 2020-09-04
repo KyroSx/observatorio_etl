@@ -2,8 +2,8 @@ import pandas
 from dataclasses import dataclass
 from .database.Database import Database
 
-from unidecode import unidecode
 from models.DataDW import DataDWFields, DWTables
+from helpers.decoder import decode
 from .Mapper import Mapper
 
 
@@ -21,7 +21,7 @@ def get_location_dict():
     IBGE = 'IBGE'
 
     locations = {
-        unidecode(row[MUN]): row[IBGE]
+        decode(row[MUN]): row[IBGE]
         for _, row in df.iterrows()
     }
 
@@ -67,7 +67,7 @@ class Load:
 
         locations = get_location_dict()
 
-        granularities = {f'{unidecode(g)}': i for i, g in qr_granularity}
+        granularities = {f'{decode(g)}': i for i, g in qr_granularity}
 
         rf_periods = {
             (in_date.__str__(), until_date.__str__()): id_rfp
@@ -103,14 +103,14 @@ class Load:
         def join(list_): return ', '.join(list_)
 
         id_list = [
-            f'{row[field]}'
+            f'{int(row[field])}' if not field == DataDWFields.DATA else f'{row[field]}'
             for field in fields_list
         ]
 
         q = f"INSERT INTO {DWTables.DATA}"
         q += f"({join(fields_list)})"
         q += f" VALUES ({join(id_list)})"
-        print(q)
+        # print(q)
 
     def fill_all_data_dw_fields(self, locations, granularities, rf_periods, info, dt_type):
         mapper = Mapper(locations, granularities, rf_periods, info, dt_type)

@@ -16,6 +16,11 @@ class Fundeb:
     def get_all_city_series(self) -> pandas.Series:
         return self.dataframe[self.city]
 
+    def get_all_city_uf_series(self) -> pandas.Series:
+        return self.dataframe[self.city].copy(deep=False)\
+            + '-'\
+            + self.dataframe[self.uf].copy(deep=False)
+
     def get_year_series(self, year: str) -> pandas.Series:
         if year in year:
             return self.dataframe[year]

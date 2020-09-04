@@ -27,7 +27,7 @@ class Validate:
         self.fundeb_validated = self.fundeb_obj.dataframe
 
         city_col = self.fundeb_obj.city
-        cities_series = self.fundeb_obj.get_all_city_series()
+        cities_series = self.fundeb_obj.get_all_city_uf_series()
 
         self.fundeb_validated[city_col] = cities_series.apply(
             self._fix_city_names)
@@ -67,6 +67,7 @@ class Validate:
     def _fix_city_names(self, city_name: str):
         return self._get_correct_city_name(city_name)
 
+    '''
     def _get_correct_city_name(self, city_name: str):
         return {
             "Belém de São Francisco": "Belém do São Francisco",
@@ -87,10 +88,42 @@ class Validate:
             "Pingo-d'Água": "Pingo d'Água",
             "Poxoréo": "Poxoréu",
             "Santa Isabel do Pará": "Santa Izabel do Pará",
+            # "Santa Teresinha": "Santa Terezinha",
             "Santana do Livramento": "Sant'Ana do Livramento",
-            "Seridó": "Junco do Serido",
+            "Seridó": "Junco do Seridó",
             "São Domingos de Pombal": "São Domingos",
-            "São Luís do Paraitinga": "São Luíz do Paraitinga",
+            "São Luís do Paraitinga": "São Luiz do Paraitinga",
             "São Valério da Natividade": "São Valério",
             "Trajano de Morais": "Trajano de Moraes"
         }.get(city_name, city_name)
+    '''
+
+    def _get_correct_city_name(self, city_name: str):
+        comaprison = {
+            "Belém de São Francisco-PE": "Belém do São Francisco",
+            "Biritiba-Mirim-SP": "Biritiba Mirim",
+            "Brasópolis-MG": "Brazópolis",
+            "Couto de Magalhães-TO": "Couto Magalhães",
+            "Eldorado dos Carajás-PA": "Eldorado do Carajás",
+            "Embu-SP": "Embu das Artes",
+            "Florínia-SP": "Florínea",
+            "Iguaraci-PE": "Iguaracy",
+            "Itapagé-CE": "Itapajé",
+            "Lagoa do Itaenga-PE": "Lagoa de Itaenga",
+            "Moji Mirim-SP": "Mogi Mirim",
+            "Muquém de São Francisco-BA": "Muquém do São Francisco",
+            "Olho-d'Água do Borges-RN": "Olho d'Água do Borges",
+            "Parati-RJ": "Paraty",
+            "Passa-Vinte-MG": "Passa Vinte",
+            "Pingo-d'Água-MG": "Pingo d'Água",
+            "Poxoréo-MT": "Poxoréu",
+            "Santa Isabel do Pará-PA": "Santa Izabel do Pará",
+            # "Santa Teresinha": "Santa Terezinha",
+            "Santana do Livramento-RS": "Sant'Ana do Livramento",
+            "Seridó-PB": "Junco do Seridó",
+            "São Domingos de Pombal-PB": "São Domingos",
+            "São Luís do Paraitinga-SP": "São Luiz do Paraitinga",
+            "São Valério da Natividade-TO": "São Valério",
+            "Trajano de Morais-RJ": "Trajano de Moraes"
+        }
+        return comaprison.get(city_name, city_name)

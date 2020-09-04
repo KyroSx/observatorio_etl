@@ -1,6 +1,6 @@
-from unidecode import unidecode
 from models.DataPeriode import DataPeriode
 from dataclasses import dataclass
+from helpers.decoder import decode
 
 
 @dataclass
@@ -13,13 +13,15 @@ class Mapper:
 
     NOT_FOUND = 'NOT FOUND'
 
-    def decode(self, string: str) -> str: return unidecode(string)
-
     def city_name_to_id(self, city_uf: str) -> int:
-        return self.locations.get(self.decode(city_uf), self.NOT_FOUND)
+        r = self.locations.get(decode(city_uf), self.NOT_FOUND)
+
+        if r is self.NOT_FOUND:
+            print('********', r, city_uf)
+        return r
 
     def period_name_to_id(self, period: str) -> int:
-        return self.granularities.get(self.decode(period), self.NOT_FOUND)
+        return self.granularities.get(decode(period), self.NOT_FOUND)
 
     def reference_period_to_id(self, date: tuple) -> int:
         return self.reference_periods.get(date, self.NOT_FOUND)

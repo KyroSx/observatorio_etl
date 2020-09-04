@@ -1,62 +1,71 @@
 import pandas
-from dataclasses import dataclass
 from models.DataPeriode import DataPeriode
-from typing import Tuple, List, Callable
 
 
-@dataclass
 class ReferencePeriode:
+    in_date: str
+    until_date: str
 
-    THREE = 3
-    SIX = 6
-    TWELVE = 12
+    def start(self, period_type: str, year: str, index: int):
+        in_date, until_date = self.get_reference_period(
+            period_type, year, index)
 
-    def get_reference_period(self, period_type, year, index) -> tuple:
+        self.in_date = in_date
+        self.until_date = until_date
+
+    def end(self) -> tuple:
+        return (self.in_date, self.until_date)
+
+    def format_date(self, year, month, day) -> str:
+        return f'{year}-{month}-{day}'
+
+    def get_reference_period(self, period_type: str, year: str, index: int) -> tuple:
         start_day = '01'
 
-        start_month_list, ratio = self._reference_period_strategy(period_type)
+        start_month_list, ratio = self.reference_period_strategy(period_type)
 
-        end_day, start_month, end_month = self._get_day_and_month(
+        end_day, start_month, end_month = self.get_day_and_month(
             start_month_list, index, ratio)
 
         if end_month == 2:
-            if self._is_leap_year(year):
+            if self.is_leap_year(year):
                 end_day += 1
 
-        in_date = f'{year}-{start_month}-{start_day}'
-        until_date = f'{year}-{end_month}-{end_day}'
+        in_date = self.format_date(year, start_month, start_day)
+        until_date = self.format_date(year, end_month, end_day)
 
         return in_date, until_date
 
-    def _reference_period_strategy(self, period_type: str) -> tuple:
+    def reference_period_strategy(self, period_type: str) -> tuple:
         def odd_list(): return [x for x in range(1, 12) if x % 2 == 1]
 
         def list_from_steps(step): return [x for x in range(1, 12, step)]
 
         periods = {
             'bimonthly': (odd_list(), 2),
-            'quarterly': (list_from_steps(self.THREE), self.THREE),
-            'half-yearly': (list_from_steps(self.SIX), self.SIX),
-            'yearly': (list_from_steps(self.TWELVE), self.TWELVE)
+            'quarterly': (list_from_steps(3), 3),
+            'half-yearly': (list_from_steps(6), 6),
+            'yearly': (list_from_steps(12), 12)
         }
+
         return periods.get(period_type)
 
-    def _get_day_and_month(self, start_month_list: list, index: int, ratio: int):
+    def format_month(self, month: int) -> str or int:
+        return f'0{month}' if month < 10 else month
+
+    def get_day_and_month(self, start_month_list: list, index: int, ratio: int) -> tuple:
         delta = index*ratio
-        end_day = self._get_end_day(delta)
+        end_day = self.get_end_day(delta)
         start_month = start_month_list[index-1]
         end_month = delta
 
-        if end_month < 10:
-            end_month = f'0{end_month}'
-
-        if start_month < 10:
-            start_month = f'0{start_month}'
+        end_month = self.format_month(end_month)
+        start_month = self.format_month(start_month)
 
         return end_day, start_month, end_month
 
-    def _get_end_day(self, month: int) -> int:
-        return {
+    def get_end_day(self, month: int) -> int:
+        last_day_of_month = {
             2: 28,
             3: 31,
             4: 30,
@@ -65,18 +74,11 @@ class ReferencePeriode:
             9: 30,
             10: 31,
             12: 31
-        }.get(month)
+        }
 
-    def _is_leap_year(self, year: str) -> bool:
-        year = int(year)
+        return last_day_of_month.get(month)
 
-        def is_multiple_of(number): return year % number == 0
+    def is_leap_year(self, year: str) -> bool:
+        def is_multiple_of(number) -> bool: return int(year) % number == 0
 
-        if is_multiple_of(4):
-            if not is_multiple_of(100):
-                return True
-
-        if is_multiple_of(400):
-            return True
-
-        return False
+        return is_multiple_of(4) and not is_multiple_of(100) or is_multiple_of(400)

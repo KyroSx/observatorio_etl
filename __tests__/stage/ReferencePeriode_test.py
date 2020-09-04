@@ -26,7 +26,7 @@ class ReferencePeriodeTest(unittest.TestCase):
         ]
 
         for year in years:
-            self.assertTrue(self.sut._is_leap_year(year))
+            self.assertTrue(self.sut.is_leap_year(year))
 
     def test_invalid_leap_year(self):
         '''::it should assert false for all years '''
@@ -37,35 +37,31 @@ class ReferencePeriodeTest(unittest.TestCase):
         ]
 
         for year in years:
-            self.assertFalse(self.sut._is_leap_year(year))
+            self.assertFalse(self.sut.is_leap_year(year))
 
     def test_reference_period_strategy_bim(self):
         '''::it should return the correct list for bimonthly '''
-        bim_list, _ = self.sut._reference_period_strategy(
-            self.Periods.BIMONTHLY)
-
-        self.assertListEqual(bim_list, [1, 3, 5, 7, 9, 11])
+        self.assertListEqual(
+            self.sut.reference_period_strategy(self.Periods.BIMONTHLY)[0],
+            [1, 3, 5, 7, 9, 11])
 
     def test_reference_period_strategy_quarterly(self):
         '''::it should return the correct list for quarterly '''
-        qr_list, _ = self.sut._reference_period_strategy(
-            self.Periods.QUARTERLY)
-
-        self.assertListEqual(qr_list, [1, 4, 7, 10])
+        self.assertListEqual(
+            self.sut.reference_period_strategy(self.Periods.QUARTERLY)[0],
+            [1, 4, 7, 10])
 
     def test_reference_period_strategy_half_yearly(self):
         '''::it should return the correct list for half-yearly '''
-        hy_list, _ = self.sut._reference_period_strategy(
-            self.Periods.HALF_YEARLY)
-
-        self.assertListEqual(hy_list, [1, 7])
+        self.assertListEqual(
+            self.sut.reference_period_strategy(self.Periods.HALF_YEARLY)[0],
+            [1, 7])
 
     def test_reference_period_strategy_yearly(self):
         '''::it should return the correct list for yearly '''
-        y_list, _ = self.sut._reference_period_strategy(
-            self.Periods.YEARLY)
-
-        self.assertListEqual(y_list, [1])
+        self.assertListEqual(
+            self.sut.reference_period_strategy(self.Periods.YEARLY)[0],
+            [1])
 
     def test_get_reference_period_bim(self):
         '''::it should return the (in, until) correctly '''
@@ -75,10 +71,15 @@ class ReferencePeriodeTest(unittest.TestCase):
 
         self.assertEqual(rp, ('2007-01-01', '2007-02-28'))
 
-     def test_get_reference_period_yearlY(self):
+    def test_get_reference_period_yearly(self):
         '''::it should return the (in, until) correctly '''
         rp = self.sut.get_reference_period(
             period_type=self.Periods.YEARLY,
             index=1, year=2007)
 
         self.assertEqual(rp, ('2007-01-01', '2007-12-31'))
+
+    def test_format_month(self):
+        self.assertEqual(self.sut.format_month(12), 12)
+        self.assertEqual(self.sut.format_month(2), '02')
+        self.assertEqual(self.sut.format_month(3), '03')

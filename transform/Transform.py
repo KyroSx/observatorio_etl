@@ -61,6 +61,7 @@ class Transform:
                 }
 
                 list_data_dicts.append(data_dict)
+
         return list_data_dicts
 
     def _calculate_period(self, period: str,

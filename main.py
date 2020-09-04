@@ -8,7 +8,7 @@ from load.Load import Load
 from models.Fundeb import Fundeb
 
 # Extract Layer
-extract = Extract(number_of_rows=120)
+extract = Extract()
 extract.start()
 
 fundeb_dataframe = extract.end()
