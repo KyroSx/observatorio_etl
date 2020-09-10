@@ -67,8 +67,8 @@ class Validate:
     def _fix_city_names(self, city_name: str):
         return self._get_correct_city_name(city_name)
 
-    def _get_correct_city_name(self, city_name: str):
-        comaprison = {
+    def _get_correct_city_name(self, city_name: str) -> str:
+        comparison = {
             "Belém de São Francisco-PE": "Belém do São Francisco-PE",
             "Biritiba-Mirim-SP": "Biritiba Mirim-SP",
             "Brasópolis-MG": "Brazópolis-MG",
@@ -97,4 +97,4 @@ class Validate:
             "Santa Teresinha-BA": "Santa Terezinha-BA"
         }
 
-        return comaprison.get(city_name, city_name)
+        return comparison.get(city_name, city_name)

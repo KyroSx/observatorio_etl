@@ -14,10 +14,7 @@ class Mapper:
     NOT_FOUND = 'NOT FOUND'
 
     def city_name_to_id(self, city_uf: str) -> int:
-        r = self.locations.get(decode(city_uf), self.NOT_FOUND)
-        if 'Cascavel' in city_uf:
-            print('CITY-UF ~~>', city_uf, r)
-        return r
+        return self.locations.get(decode(city_uf), self.NOT_FOUND)
 
     def period_name_to_id(self, period: str) -> int:
         return self.granularities.get(decode(period), self.NOT_FOUND)

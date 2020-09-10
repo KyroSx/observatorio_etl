@@ -50,8 +50,8 @@ class ReferencePeriode:
 
         return periods.get(period_type)
 
-    def format_month(self, month: int) -> str or int:
-        return f'0{month}' if month < 10 else month
+    def format_month(self, month: int) -> str:
+        return f'0{month}' if month < 10 else str(month)
 
     def get_day_and_month(self, start_month_list: list, index: int, ratio: int) -> tuple:
         delta = index*ratio
